@@ -287,10 +287,8 @@ save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta", repla
 
 *** Drop nas escolas entrantes*
 *drop if tratamento==.
+*tab cod_escola, gen(cod_escola_i)
 
-
-
-tab cod_escola, gen(cod_escola_i)
 **** Estimações  ******
 
 areg std_prof i.ano trat1, a(it) cl(cod_escola)
@@ -299,10 +297,10 @@ areg std_prof i.ano trat3, a(it)  cl(cod_escola)
 areg std_prof i.ano trat4, a(it)  cl(cod_escola)
 
 
-areg std_prof i.ano i.cod_escola trat1, a(it) cl(cod_escola)
-areg std_prof i.ano i.cod_escola trat2, a(it)  cl(cod_escola)
-areg std_prof i.ano i.cod_escola trat3, a(it)  cl(cod_escola)
-areg std_prof i.ano i.cod_escola trat4, a(it)  cl(cod_escola)
+areg std_prof i.ano trat1 i.cod_escola , a(it) 
+areg std_prof i.ano trat2 i.cod_escola , a(it) 
+areg std_prof i.ano trat3 i.cod_escola , a(it) 
+areg std_prof i.ano trat4 i.cod_escola , a(it) 
 
 
 
