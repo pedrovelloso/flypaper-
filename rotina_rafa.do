@@ -279,17 +279,54 @@ replace trat4=0 if rank_07==4 & rank_cp_x==3
 
 label variable trat4 "4º quartil escola + 1º tercil cp em relação ao 3º tercil"
 
-
+save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta", replace
 ********************************************************************
 
 
-save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta", replace
+
 
 *** Drop nas escolas entrantes*
 *drop if tratamento==.
 *tab cod_escola, gen(cod_escola_i)
 
 **** Estimações  ******
+mkdir C:/results
+cd C:/results
+
+
+areg std_prof i.ano trat1, a(it) cl(cod_escola)
+areg std_prof i.ano trat2, a(it)  cl(cod_escola)
+areg std_prof i.ano trat3, a(it)  cl(cod_escola)
+areg std_prof i.ano trat4, a(it)  cl(cod_escola)
+
+
+areg std_prof i.ano trat1 i.cod_escola , a(it) 
+areg std_prof i.ano trat2 i.cod_escola , a(it) 
+areg std_prof i.ano trat3 i.cod_escola , a(it) 
+areg std_prof i.ano trat4 i.cod_escola , a(it) 
+
+outreg2 using tratamento.xls, append dec(3)
+
+use "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
+
+
+
+
+
+/*
+keep if ano ==2007
+
+drop if aln_efetivo <=5
+
+keep cod_escola
+
+merge m:m cod_escola using "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
+
+keep if _merge ==3
+drop _merge
+
+bysort ano: tab aln_efetivo if aln_efetivo <=5
+
 
 areg std_prof i.ano trat1, a(it) cl(cod_escola)
 areg std_prof i.ano trat2, a(it)  cl(cod_escola)
@@ -304,5 +341,166 @@ areg std_prof i.ano trat4 i.cod_escola , a(it)
 
 
 
+clear all
+
+
 use "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
 
+
+keep if ano ==2007
+
+drop if aln_efetivo <=10
+
+keep cod_escola
+
+merge m:m cod_escola using "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
+
+keep if _merge ==3
+drop _merge
+
+bysort ano: tab aln_efetivo if aln_efetivo <=5
+
+
+areg std_prof i.ano trat1, a(it) cl(cod_escola)
+areg std_prof i.ano trat2, a(it)  cl(cod_escola)
+areg std_prof i.ano trat3, a(it)  cl(cod_escola)
+areg std_prof i.ano trat4, a(it)  cl(cod_escola)
+
+
+areg std_prof i.ano trat1 i.cod_escola , a(it) 
+areg std_prof i.ano trat2 i.cod_escola , a(it) 
+areg std_prof i.ano trat3 i.cod_escola , a(it) 
+areg std_prof i.ano trat4 i.cod_escola , a(it) 
+
+
+*/
+
+
+***** Unindo base com gasto total, pib e fpm ****
+
+clear all 
+
+use "D:\Pedro\Tese Pedro\Flypaper\flypaper-rafa\Base I.dta"
+
+
+keep if ano ==2008
+
+gen g_totalpc08 = g_total08/pop08
+gen pib_percapta08 = pib /pop08
+gen fpm08 =fpm / pop
+
+keep cod_ibge  g_totalpc08 pib_percapta08 fpm08
+
+save "D:\Pedro\Tese Pedro\Flypaper\flypaper-rafa\Base I.dta", replace
+
+
+
+clear all
+
+use "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
+
+merge m:m cod_ibge using "D:\Pedro\Tese Pedro\Flypaper\flypaper-rafa\Base I.dta"
+
+
+/*
+Abaiara 
+Altaneira 
+Cariré 
+Groaíras 
+Ibaretama 
+Palmácia 
+São Benedito 
+São Luís do Curu 
+Uruburetama 
+
+foram exlcuidas por não ter dados
+*/
+
+keep if _merge ==3
+
+
+drop _merge
+
+
+save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta", replace
+
+
+********************************************************************************
+clear all
+
+use "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
+
+
+keep if ano==2008
+
+
+gen pos = mestrado + doutorado
+
+ebalance trat1 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal1
+
+ebalance trat2 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal2
+
+ebalance trat3 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal3
+
+ebalance trat4 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal4
+
+
+keep cod_escola alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08 _webal1 _webal2 _webal3 _webal4
+
+move pos d_idade_1
+
+rename alfa_incompleto alfa_incompleto_08
+rename inter inter_08
+rename sufic sufic_08
+rename desej desej_08
+rename especializacao especializacao_08
+rename pos pos_08
+rename d_idade_1 d_idade_1_08
+rename d_idade_2 d_idade_2_08
+rename d_idade_3 d_idade_3_08
+rename d_idade_4 d_idade_4_08
+rename d_tp_sexo_1 d_tp_sexo_1_08
+rename d_tp_cor_branco d_tp_cor_branco_08
+rename apr_1 apr_1_08
+rename apr_2 apr_2_08
+rename aban_1 aban_1_08
+rename aban_2 aban_2_08
+
+
+save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_2.dta", replace
+
+clear all
+
+
+
+use "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
+
+
+merge m:m cod_escola using "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_2.dta"
+
+
+save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_3.dta", replace
+
+areg std_prof i.ano trat1 , a(it) cl(cod_escola)
+areg std_prof i.ano trat1 _webal1, a(it) cl(cod_escola)
+areg std_prof i.ano trat1 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+
+areg std_prof i.ano trat2, a(it)  cl(cod_escola)
+areg std_prof i.ano trat2 _webal2, a(it) cl(cod_escola)
+areg std_prof i.ano trat2 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+
+areg std_prof i.ano trat3, a(it)  cl(cod_escola)
+areg std_prof i.ano trat3 _webal3, a(it) cl(cod_escola)
+areg std_prof i.ano trat3 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+
+areg std_prof i.ano trat4, a(it)  cl(cod_escola)
+areg std_prof i.ano trat4 _webal4, a(it) cl(cod_escola)
+areg std_prof i.ano trat4 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
