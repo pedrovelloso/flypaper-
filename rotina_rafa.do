@@ -487,7 +487,7 @@ use "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta"
 merge m:m cod_escola using "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_2.dta"
 
 
-save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_3.dta", replace
+*save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_3.dta", replace
 
 areg std_prof i.ano trat1 , a(it) cl(cod_escola)
 areg std_prof i.ano trat1 _webal1, a(it) cl(cod_escola)
@@ -504,3 +504,75 @@ areg std_prof i.ano trat3 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
 areg std_prof i.ano trat4, a(it)  cl(cod_escola)
 areg std_prof i.ano trat4 _webal4, a(it) cl(cod_escola)
 areg std_prof i.ano trat4 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+
+
+
+
+
+
+**********************************************************************************************
+
+use use "C:\Users\Pedro Veloso\Documents\GitHub\flypaper-\spaece_inicial_3.dta" 
+
+
+egen std_atu = std(atu)
+egen std_duracao = std (duracao_)
+egen std_dsu = std(dsu)
+
+
+areg std_atu i.ano trat1, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) replace
+areg std_atu i.ano trat1 _webal1, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_atu i.ano trat2, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_atu i.ano trat2 _webal2, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_atu i.ano trat3, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_atu i.ano trat3 _webal3, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_atu i.ano trat4, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_atu i.ano trat4 _webal4, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+
+
+
+areg std_dsu i.ano trat1, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_dsu i.ano trat1 _webal1, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_dsu i.ano trat2, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_dsu i.ano trat2 _webal2, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_dsu i.ano trat3, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_dsu i.ano trat3 _webal3, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_dsu i.ano trat4, a(it) 
+outreg2 using indicadores.xls, dec(3) append
+areg std_dsu i.ano trat4 _webal4, a(it) 
+outreg2 using indicadores.xls, dec(3) append
+
+
+
+areg std_duracao i.ano trat1, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) replace
+areg std_duracao i.ano trat1 _webal1, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_duracao i.ano trat2, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_duracao i.ano trat2 _webal2, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_duracao i.ano trat3, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_duracao i.ano trat3 _webal3, a(it) cl(cod_escola)
+outreg2 using indicadores.xls, dec(3) append
+areg std_duracao i.ano trat4, a(it) 
+outreg2 using indicadores.xls, dec(3) append
+areg std_duracao i.ano trat4 _webal4, a(it) 
+outreg2 using indicadores.xls, dec(3) append
+
+
