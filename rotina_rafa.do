@@ -505,12 +505,50 @@ areg std_prof i.ano trat4, a(it)  cl(cod_escola)
 areg std_prof i.ano trat4 _webal4, a(it) cl(cod_escola)
 areg std_prof i.ano trat4 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
 
+********************************************************************************
+egen mediana_cp_x = xtile (cp_x), nq(2)
+
+tab mediana_cp_x
+
+tab rank_07 mediana_cp_x
+
+gen mtrat1=.
+replace mtrat1 =1 if rank_07==1 & mediana_cp_x==2
+replace mtrat1 =0 if rank_07==1 & mediana_cp_x==1
+
+
+gen mtrat4=.
+replace mtrat4=1 if rank_07==4 & mediana_cp_x==2
+replace mtrat4=0 if rank_07==4 & mediana_cp_x==1
+
+
+ebalance mtrat1 alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _mwebal1
+
+
+ebalance mtrat4  alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _mwebal4
 
 
 
+areg std_prof i.ano mtrat1, a(it) cl(cod_escola)
+outreg2 using median_cp.xls, dec(3) replace
+areg std_prof i.ano mtrat1 _mwebal1, a(it)  cl(cod_escola)
+outreg2 using median_cp.xls, dec(3) append
+areg std_prof i.ano mtrat1 g_totalpc08- aban_2_08, a(it)  cl(cod_escola)
+outreg2 using median_cp.xls, dec(3) append
+areg std_prof i.ano mtrat4, a(it)  cl(cod_escola)
+outreg2 using median_cp.xls, dec(3) append
+areg std_prof i.ano mtrat4 _mwebal4, a(it) cl(cod_escola)
+outreg2 using median_cp.xls, dec(3) append
+areg std_prof i.ano mtrat4 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+outreg2 using median_cp.xls, dec(3) append
 
 
-**********************************************************************************************
+
+********************************************************************************
 
 use use "C:\Users\Pedro Veloso\Documents\GitHub\flypaper-\spaece_inicial_3.dta" 
 
