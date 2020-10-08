@@ -550,7 +550,7 @@ outreg2 using median_cp.xls, dec(3) append
 
 ********************************************************************************
 
-use use "C:\Users\Pedro Veloso\Documents\GitHub\flypaper-\spaece_inicial_3.dta" 
+use "C:\Users\Pedro Veloso\Documents\GitHub\flypaper-\spaece_inicial_3.dta" 
 
 
 egen std_atu = std(atu)
