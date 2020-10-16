@@ -253,31 +253,31 @@ set matsize 11000
 
 
 gen trat1=.
-replace trat1 =1 if rank_07==1 & rank_cp_x==1
-replace trat1 =0 if rank_07==1 & rank_cp_x==3
+replace trat1 =1 if rank_07==1 & rank_cp_x==3
+replace trat1 =0 if rank_07==1 & rank_cp_x==1
 
-label variable trat1 " 1º quartil escola + 1º tercil cp em relação ao 3º tercil cp"
+label variable trat1 " 1º quartil escola + 3º tercil cp em relação ao 1º tercil cp"
 
 gen trat2=.
-replace trat2=1 if rank_07==2 & rank_cp_x==1
-replace trat2=0 if rank_07==2 & rank_cp_x==3
+replace trat2=1 if rank_07==2 & rank_cp_x==3
+replace trat2=0 if rank_07==2 & rank_cp_x==1
 
-label variable trat2 "2º quartil escola + 1º tercil cp em relação ao 3º tercil cp"
+label variable trat2 "2º quartil escola + 3º tercil cp em relação ao 1º tercil cp"
 
 gen trat3=.
-replace trat3=1 if rank_07==3 & rank_cp_x==1
-replace trat3=0 if rank_07==3 & rank_cp_x==3
+replace trat3=1 if rank_07==3 & rank_cp_x==3
+replace trat3=0 if rank_07==3 & rank_cp_x==1
  
-label variable trat3 "3º quartil escola + 1º tercil cp em relação ao 3º tercil cp"
+label variable trat3 "3º quartil escola + 3º tercil cp em relação ao 1º tercil cp"
 
 
 gen trat4=.
-replace trat4=1 if rank_07==4 & rank_cp_x==1
-replace trat4=0 if rank_07==4 & rank_cp_x==3
+replace trat4=1 if rank_07==4 & rank_cp_x==3
+replace trat4=0 if rank_07==4 & rank_cp_x==1
 
 
 
-label variable trat4 "4º quartil escola + 1º tercil cp em relação ao 3º tercil"
+label variable trat4 "4º quartil escola + 3º tercil cp em relação ao 1º tercil"
 
 save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_1.dta", replace
 ********************************************************************
@@ -403,15 +403,7 @@ merge m:m cod_ibge using "D:\Pedro\Tese Pedro\Flypaper\flypaper-rafa\Base I.dta"
 
 
 /*
-Abaiara 
-Altaneira 
-Cariré 
-Groaíras 
-Ibaretama 
-Palmácia 
-São Benedito 
-São Luís do Curu 
-Uruburetama 
+Abaiara, Altaneira, Cariré, Groaíras, Ibaretama, Palmácia, São Benedito, São Luís do Curu, Uruburetama 
 
 foram exlcuidas por não ter dados
 */
@@ -436,21 +428,6 @@ keep if ano==2008
 
 gen pos = mestrado + doutorado
 
-ebalance trat1 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
-
-rename _webal _webal1
-
-ebalance trat2 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
-
-rename _webal _webal2
-
-ebalance trat3 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
-
-rename _webal _webal3
-
-ebalance trat4 alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08
-
-rename _webal _webal4
 
 
 keep cod_escola alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08 _webal1 _webal2 _webal3 _webal4
@@ -489,21 +466,53 @@ merge m:m cod_escola using "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece
 
 *save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_3.dta", replace
 
+
+ebalance trat1 alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal1
+
+ebalance trat2 alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal2
+
+ebalance trat3 alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal3
+
+ebalance trat4 alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
+
+rename _webal _webal4
+
+
+save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_2.dta", replace
+
 areg std_prof i.ano trat1 , a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) replace
 areg std_prof i.ano trat1 _webal1, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 areg std_prof i.ano trat1 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 
 areg std_prof i.ano trat2, a(it)  cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 areg std_prof i.ano trat2 _webal2, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 areg std_prof i.ano trat2 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 
 areg std_prof i.ano trat3, a(it)  cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 areg std_prof i.ano trat3 _webal3, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 areg std_prof i.ano trat3 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 
 areg std_prof i.ano trat4, a(it)  cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 areg std_prof i.ano trat4 _webal4, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 areg std_prof i.ano trat4 g_totalpc08- aban_2_08, a(it) cl(cod_escola)
+outreg2 using tratamento.xls, dec(3) append
 
 ********************************************************************************
 egen mediana_cp_x = xtile (cp_x), nq(2)
@@ -597,7 +606,7 @@ outreg2 using indicadores.xls, dec(3) append
 
 
 areg std_duracao i.ano trat1, a(it) cl(cod_escola)
-outreg2 using indicadores.xls, dec(3) replace
+outreg2 using indicadores.xls, dec(3) append
 areg std_duracao i.ano trat1 _webal1, a(it) cl(cod_escola)
 outreg2 using indicadores.xls, dec(3) append
 areg std_duracao i.ano trat2, a(it) cl(cod_escola)
@@ -608,9 +617,10 @@ areg std_duracao i.ano trat3, a(it) cl(cod_escola)
 outreg2 using indicadores.xls, dec(3) append
 areg std_duracao i.ano trat3 _webal3, a(it) cl(cod_escola)
 outreg2 using indicadores.xls, dec(3) append
-areg std_duracao i.ano trat4, a(it) 
+areg std_duracao i.ano trat4, a(it) cl(cod_escola)
 outreg2 using indicadores.xls, dec(3) append
-areg std_duracao i.ano trat4 _webal4, a(it) 
+areg std_duracao i.ano trat4 _webal4, a(it) cl(cod_escola)
 outreg2 using indicadores.xls, dec(3) append
 
 
+save "C:\Users\Pedro Veloso\Documents\GitHub\flypaper-\spaece_inicial_3.dta", replace 
