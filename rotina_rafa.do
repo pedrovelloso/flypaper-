@@ -623,4 +623,59 @@ areg std_duracao i.ano trat4 _webal4, a(it) cl(cod_escola)
 outreg2 using indicadores.xls, dec(3) append
 
 
+
+
+areg atu i.ano trat1, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) replace
+areg atu i.ano trat1 _webal1, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg atu i.ano trat2, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg atu i.ano trat2 _webal2, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg atu i.ano trat3, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg atu i.ano trat3 _webal3, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg atu i.ano trat4, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg atu i.ano trat4 _webal4, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+
+
+areg duracao_ i.ano trat1, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg duracao_ i.ano trat1 _webal1, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg duracao_ i.ano trat2, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg duracao_ i.ano trat2 _webal2, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg duracao_ i.ano trat3, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg duracao_ i.ano trat3 _webal3, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg duracao_ i.ano trat4, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg duracao_ i.ano trat4 _webal4, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+
+
+areg dsu i.ano trat1, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg dsu i.ano trat1 _webal1, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg dsu i.ano trat2, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg dsu i.ano trat2 _webal2, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg dsu i.ano trat3, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg dsu i.ano trat3 _webal3, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg dsu i.ano trat4, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+areg dsu i.ano trat4 _webal4, a(it) cl(cod_escola)
+outreg2 using indicadores1.xls, dec(3) append
+
 save "C:\Users\Pedro Veloso\Documents\GitHub\flypaper-\spaece_inicial_3.dta", replace 
