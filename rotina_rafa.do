@@ -430,7 +430,7 @@ gen pos = mestrado + doutorado
 
 
 
-keep cod_escola alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08 _webal1 _webal2 _webal3 _webal4
+keep cod_escola alfa_incompleto inter sufic desej especializacao pos  d_idade_1 d_idade_2 d_idade_3 d_idade_4 d_tp_sexo_1 d_tp_cor_branco  apr_1 apr_2 aban_1 aban_2  g_totalpc08 pib_percapta08 fpm08 
 
 move pos d_idade_1
 
@@ -467,7 +467,7 @@ merge m:m cod_escola using "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece
 *save "D:\Pedro\Tese Pedro\Flypaper\Pareamento\censo\spaece_inicial_3.dta", replace
 
 
-ebalance trat1 alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
+ebalance mtrat1 alfa_incompleto_08 inter_08 sufic_08 desej_08 especializacao_08 pos_08 d_idade_1_08 d_idade_2_08 d_idade_3_08 d_idade_4_08 d_tp_sexo_1_08 d_tp_cor_branco_08 apr_1_08 apr_2_08 aban_1_08 aban_2_08 g_totalpc08 pib_percapta08 fpm08
 
 rename _webal _webal1
 
