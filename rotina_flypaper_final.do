@@ -701,28 +701,419 @@ outreg2 using resultados_5_ano.xls, dec(3) append
 ********************************************************************************
 
 
-
 ****************************** SPAECE ALFA *************************************
 clear all 
 
-use "D:\GitHub\flypaper-\spaece_inicial_inter.dta"
+use "D:\GitHub\flypaper-\indicadores_inep.dta" 
+
+corr ird adf_ai_1  adf_ai_3 adf_ai_5 atu_2 dsu_ai dur_2 icg ied_ai_3 
+
+factortest ird adf_ai_1  adf_ai_3 adf_ai_5 atu_2 dsu_ai dur_2 icg ied_ai_3  
+
+factor ird adf_ai_1  adf_ai_3 adf_ai_5 atu_2 dsu_ai dur_2 icg ied_ai_3 
+
+rotate
+
+alpha ird adf_ai_1  adf_ai_3 adf_ai_5 atu_2 dsu_ai dur_2 icg ied_ai_3 
+
+loadingplot
+scoreplot
+screeplot, yline(1)
+
+
+pca ird adf_ai_1  adf_ai_3 adf_ai_5 atu_2 dsu_ai dur_2 icg ied_ai_3
+
+predict pca
+
+
+*padronizando pca (com média 50 e DP 10)
+
+sum pca
+
+gen pca_padronizado = 10 *((pca - 8.80e-10 ) /1.650045) +50
+
+sum pca_padronizado
+
+
+keep ano cod_escola ird adf_ai_1  adf_ai_3 adf_ai_5 atu_2 dsu_ai dur_2 icg ied_ai_3 pca pca_padronizado
+
+merge m:m ano cod_escola using "D:\GitHub\flypaper-\spaece_inicial_inter.dta"
+
+egen std_ird = std(ird)
+egen std_adf_ai_1 = std (adf_ai_1)
+egen std_adf_ai_3 = std (adf_ai_3)
+egen std_adf_ai_5 = std (adf_ai_5)
+egen std_atu_2 = std (atu_2)
+egen std_dsu_ai = std (dsu_ai)
+egen std_dur_2 = std (dur_2)
+egen std_icg = std (icg)
+egen std_ied_ai_3 = std (ied_ai_3)
 
 
 
+areg ird  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) replace
+areg std_ird  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg adf_ai_1  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_adf_ai_1  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg adf_ai_3  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_adf_ai_3  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg adf_ai_5  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_adf_ai_5  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg atu_2  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_atu_2  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg dsu_ai  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_dsu_ai  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg dur_2  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_dur_2  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg icg  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_icg  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg ied_ai_3  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_ied_ai_3  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg pca  mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg pca_padronizado mtrat1  _mwebal1, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
 
 
+areg ird  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_ird  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg adf_ai_1  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_adf_ai_1  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg adf_ai_3  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_adf_ai_3  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg adf_ai_5  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_adf_ai_5  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg atu_2  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_atu_2  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg dsu_ai  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_dsu_ai  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg dur_2  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_dur_2  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg icg  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_icg  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg ied_ai_3  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+areg std_ied_ai_3  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
+areg pca  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
+
+areg pca_padronizado  mtrat2  _mwebal2, a(it) cl(cod_escola)
+outreg2 using mecanismo_alfa.xls, dec(3) append
 
 ****************************** SPAECE 5º ANO ***********************************
 clear all 
 
-use "D:\GitHub\flypaper-\spaece_5_inicial_inter.dta"
+use "D:\GitHub\flypaper-\indicadores_inep.dta" 
+
+corr ird adf_ai_1  adf_ai_3 adf_ai_5 atu_5 dsu_ai dur_5 icg ied_ai_3 
+
+factortest ird adf_ai_1  adf_ai_3 adf_ai_5 atu_5 dsu_ai dur_5 icg ied_ai_3  
+
+factor ird adf_ai_1  adf_ai_3 adf_ai_5 atu_5 dsu_ai dur_5 icg ied_ai_3 
+
+rotate
+
+alpha ird adf_ai_1  adf_ai_3 adf_ai_5 atu_5 dsu_ai dur_5 icg ied_ai_3 
+
+loadingplot
+scoreplot
+screeplot, yline(1)
+
+
+pca ird adf_ai_1  adf_ai_3 adf_ai_5 atu_5 dsu_ai dur_5 icg ied_ai_3
+
+predict pca
+
+
+*padronizando pca (com média 50 e DP 10)
+
+sum pca
+
+gen pca_padronizado = 10 *((pca - 3.73e-10 ) /1.635117) +50
+
+sum pca_padronizado
+
+
+keep ano cod_escola ird adf_ai_1  adf_ai_3 adf_ai_5 atu_5 dsu_ai dur_5 icg ied_ai_3 pca pca_padronizado
+
+merge m:m ano cod_escola using "D:\GitHub\flypaper-\spaece_5_inicial_inter.dta"
+
+
+egen std_ird = std(ird)
+egen std_adf_ai_1 = std (adf_ai_1)
+egen std_adf_ai_3 = std (adf_ai_3)
+egen std_adf_ai_5 = std (adf_ai_5)
+egen std_atu_5 = std (atu_5)
+egen std_dsu_ai = std (dsu_ai)
+egen std_dur_5 = std (dur_5)
+egen std_icg = std (icg)
+egen std_ied_ai_3 = std (ied_ai_3)
+
+
+
+
+***** Para Lingua Portuguesa ******
+areg ird  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) replace
+areg std_ird  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_1  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_1  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_3  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_3  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_5  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_5  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg atu_5  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_atu_5  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dsu_ai  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dsu_ai  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dur_5  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dur_5  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg icg  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_icg  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg ied_ai_3  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_ied_ai_3  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca_padronizado  mtrat1_lp  _mwebal1_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+
+
+areg ird  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_ird  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_1  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_1  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_3  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_3  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_5  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_5  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg atu_5  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_atu_5  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dsu_ai  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dsu_ai  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dur_5  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dur_5  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg icg  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_icg  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg ied_ai_3  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_ied_ai_3  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca_padronizado  mtrat2_lp  _mwebal2_lp, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+
+**** Matemática *****
+areg ird  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_ird  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_1  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_1  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_3  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_3  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_5  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_5  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg atu_5  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_atu_5  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dsu_ai  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dsu_ai  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dur_5  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dur_5  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg icg  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_icg  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg ied_ai_3  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_ied_ai_3  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca_padronizado  mtrat1_mt _mwebal1_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+
+
+areg ird  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_ird  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_1  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_1  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_3  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_3  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg adf_ai_5  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_adf_ai_5  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg atu_5  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_atu_5  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dsu_ai  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dsu_ai  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg dur_5  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_dur_5  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg icg  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_icg  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg ied_ai_3  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+areg std_ied_ai_3  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
+
+areg pca_padronizado  mtrat2_mt _mwebal2_mt, a(it) cl(cod_escola)
+outreg2 using mecanismo_5.xls, dec(3) append
